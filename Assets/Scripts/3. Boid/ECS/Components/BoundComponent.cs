@@ -1,4 +1,4 @@
-﻿namespace HelloECS.ECS
+﻿namespace HelloECS.Boid
 {
     using Unity.Entities;
 
@@ -9,7 +9,9 @@
         public float Bottom;
         public float Left;
         public float Right;
+        public float Forward;
+        public float Back;
     }
 
-    public class BoundedComponent : ComponentDataWrapper<Bound> { }
+    public class BoundComponent : ComponentDataWrapper<Bound> { }
 }

@@ -1,52 +1,51 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections;
-using Unity.Entities;
-using Unity.Jobs;
-using Unity.Transforms;
-using UnityEngine;
-using Unity.Burst;
-using Unity.Mathematics;
-
-public class MovementSystem : JobComponentSystem
+﻿namespace HelloECS.ECS
 {
-    [BurstCompile]
-    struct MovementJob : IJobProcessComponentData<Position, Rotation, MoveSpeed, Bound>
+    using Unity.Collections;
+    using Unity.Entities;
+    using Unity.Jobs;
+    using Unity.Transforms;
+    using UnityEngine;
+    using Unity.Burst;
+    using Unity.Mathematics;
+
+    public class MovementSystem : JobComponentSystem
     {
-        public float DeltaTime;
-
-        public void Execute(ref Position pos, [ReadOnly] ref Rotation rot, ref MoveSpeed moveSpeed, [ReadOnly] ref Bound bound)
+        [BurstCompile]
+        struct MovementJob : IJobProcessComponentData<Position, MoveSpeed, Bound>
         {
-            float3 value = pos.Value;
+            public float DeltaTime;
 
-            // TODO: change forward rotation
-
-            if (value.z <= bound.Bottom || value.z >= bound.Top)
+            public void Execute(ref Position pos, ref MoveSpeed moveSpeed, [ReadOnly] ref Bound bound)
             {
-                moveSpeed.Z *= -1;
+                float3 value = pos.Value;
+
+                if (value.z <= bound.Bottom || value.z >= bound.Top)
+                {
+                    moveSpeed.Z *= -1;
+                }
+
+                if (value.x <= bound.Left || value.x >= bound.Right)
+                {
+                    moveSpeed.X *= -1;
+                }
+
+                value.x += DeltaTime * moveSpeed.X;
+                value.z += DeltaTime * moveSpeed.Z;
+
+                pos.Value = value;
             }
-
-            if (value.x <= bound.Left || value.x >= bound.Right)
-            {
-                moveSpeed.X *= -1;
-            }
-
-            value.x += DeltaTime * moveSpeed.X;
-            value.z += DeltaTime * moveSpeed.Z;
-
-            pos.Value = value;
         }
-    }
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
-    {
-        MovementJob moveJob = new MovementJob
+        protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            DeltaTime   = Time.deltaTime
-        };
+            MovementJob moveJob = new MovementJob
+            {
+                DeltaTime = Time.deltaTime
+            };
 
-        JobHandle moveHandle = moveJob.Schedule(this, inputDeps);
+            JobHandle moveHandle = moveJob.Schedule(this, inputDeps);
 
-        return moveHandle;
+            return moveHandle;
+        }
     }
 }

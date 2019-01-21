@@ -28,10 +28,10 @@ public class MonoBehaviorSceneController : MonoBehaviour
 
     private void Awake()
     {
-        _topBound = TopRight.position.z;
-        _bottomBound = BottomLeft.position.z;
-        _leftBound = BottomLeft.position.x;
-        _rightBound = TopRight.position.x;
+        _topBound       = TopRight.position.z;
+        _bottomBound    = BottomLeft.position.z;
+        _leftBound      = BottomLeft.position.x;
+        _rightBound     = TopRight.position.x;
     }
 
     // Start is called before the first frame update

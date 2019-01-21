@@ -12,14 +12,10 @@ public class MoveBehavior : MonoBehaviour
     public float LeftBound;
     public float RightBound;
 
-    // Update is called once per frame
     void Update()
     {
         float deltaTime     = Time.deltaTime;
-
-        Vector3 value = transform.position;
-
-        // TODO: change forward rotation
+        Vector3 value       = transform.position;
 
         if (value.z <= BottomBound || value.z >= TopBound)
         {

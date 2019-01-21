@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.Entities;
-using UnityEngine;
-
-[System.Serializable]
-public struct MoveSpeed : IComponentData
+﻿namespace HelloECS.ECS
 {
-    public float X;
-    public float Z;
-}
+    using Unity.Entities;
 
-public class MoveSpeedComponent : ComponentDataWrapper<MoveSpeed> { }
+    [System.Serializable]
+    public struct MoveSpeed : IComponentData
+    {
+        public float X;
+        public float Z;
+    }
+
+    public class MoveSpeedComponent : ComponentDataWrapper<MoveSpeed> { }
+}
