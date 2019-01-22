@@ -8,13 +8,14 @@
     using Unity.Burst;
     using Unity.Mathematics;
 
+    [UpdateInGroup(typeof(BoidsSystemGroup))]
     public class BoidWallSystem : JobComponentSystem
     {
         [BurstCompile]
         struct BoidWallJob : IJobProcessComponentData<Position, Acceleration, Bound>
         {
-            public float Threshold;
-            public float Weight;
+            [ReadOnly] public float Threshold;
+            [ReadOnly] public float Weight;
 
             public void Execute([ReadOnly] ref Position pos, ref Acceleration accel, [ReadOnly] ref Bound bound)
             {
@@ -43,15 +44,13 @@
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            BoidWallJob wallJob = new BoidWallJob
+            var wallJob = new BoidWallJob
             {
                 Threshold   = JobBoidSceneController.BoidParameter.WallDistance,
                 Weight      = JobBoidSceneController.BoidParameter.WallWeight,
             };
 
-            JobHandle wallHandle = wallJob.Schedule(this, inputDeps);
-
-            return wallHandle;
+            return wallJob.Schedule(this, inputDeps);
         }
     }
 }

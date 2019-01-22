@@ -315,7 +315,7 @@ MonoBehaviour:
     WallWeight: 10
     NeighbourFOV: 90
     NeighbourDistance: 10
-    SeparationWeight: 5
+    SeparationWeight: 50
     AlignmentWeight: 3
     CohesionWeight: 2
   EntityPrefab: {fileID: 1075859382328151276, guid: 6bbe71f0de7694e4c8f021672f126e5a,

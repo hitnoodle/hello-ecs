@@ -257,7 +257,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.9, y: 3.3, z: -122.7}
+  m_LocalPosition: {x: 5, y: 5, z: -80}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -315,11 +315,16 @@ MonoBehaviour:
     WallWeight: 20
     NeighbourFOV: 90
     NeighbourDistance: 10
-    SeparationWeight: 5
+    SeparationWeight: 50
     AlignmentWeight: 3
     CohesionWeight: 2
-  EntityPrefab: {fileID: 8710374206720327897, guid: c66a11a96c6b892438e62a505c4adf8d,
-    type: 3}
+  EntityScale: {x: 1, y: 1, z: 4}
+  EntityRenderer:
+    mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+    material: {fileID: 2100000, guid: b7261d1c6988b434882518ffe057ca69, type: 2}
+    subMesh: 0
+    castShadows: 0
+    receiveShadows: 0
   EntityCount: 0
   EntityInitialCount: 1000
   EntityIncrement: 500

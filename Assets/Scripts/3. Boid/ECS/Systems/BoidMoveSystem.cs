@@ -8,15 +8,15 @@
     using Unity.Burst;
     using Unity.Mathematics;
 
-    [UpdateAfter(typeof(BoidWallSystem))]
+    [UpdateAfter(typeof(BoidsSystemGroup))]
     public class BoidMoveSystem : JobComponentSystem
     {
         [BurstCompile]
         struct BoidMoveJob : IJobProcessComponentData<Position, Rotation, Velocity, Acceleration>
         {
-            public float DeltaTime;
-            public float MinSpeed;
-            public float MaxSpeed;
+            [ReadOnly] public float DeltaTime;
+            [ReadOnly] public float MinSpeed;
+            [ReadOnly] public float MaxSpeed;
 
             public void Execute(ref Position pos, ref Rotation rot, ref Velocity vec, ref Acceleration accel)
             {
@@ -43,16 +43,14 @@
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            BoidMoveJob moveJob = new BoidMoveJob
+            var moveJob = new BoidMoveJob
             {
                 DeltaTime   = Time.deltaTime,
                 MinSpeed    = JobBoidSceneController.BoidParameter.MinSpeed,
                 MaxSpeed    = JobBoidSceneController.BoidParameter.MaxSpeed,
             };
 
-            JobHandle moveHandle = moveJob.Schedule(this, inputDeps);
-
-            return moveHandle;
+            return moveJob.Schedule(this, inputDeps);
         }
     }
 }
